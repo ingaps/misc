@@ -1,6 +1,6 @@
-# Decimal number validation in ASP.NET MVC
+# Decimal number validation in ASP.NET MVC 5
 
-It is known that by default ASP.NET applications accept only dot as the separator for decimal numbers as it is common for the US. If you want to use a comma as a separator, the official documentation says it is necessary to include a special jQuery script for globalization.
+It is known that by default ASP.NET applications accept only dot as the separator for decimal numbers as it is common for the English localization Culture. If you want to use a comma as a separator, the official documentation says it is necessary to include a special jQuery script for globalization [ASP.NET tutorial](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/examining-the-edit-methods-and-edit-view#jquery-validation-for-non-english-locales)
 
 Let's say you want your app to accept BOTH comma and dot as a decimal separator in input fields. Here is a simple way to do this:
 
@@ -13,7 +13,7 @@ Step 2. with step one the values with dot or comma separator are allowed, but th
 
 ### Steps:
 
-1. overwrite jQuery validation number method (based on https://weblogs.asp.net/jdanforth/jquery-validate-and-the-comma-decimal-separator) )
+1. overwrite jQuery validation number method (based on [ReBuildAll Blog](http://blog.rebuildall.net/2011/03/02/jQuery_validate_and_the_comma_decimal_separator) )
 
 ```javascript
 $.validator.methods.number = function (value, element) {
@@ -22,8 +22,7 @@ return this.optional(element) || /^$?-?\d+((.(\d+))|(,(\d+)))?$/.test(value);
 ```
 the regex `/^$?-?\d+((.(\d+))|(,(\d+)))?$/` accepts positive or negative decimal numbers with dot or comma as separator
 
-2. custom ModelBinder class (add it to your project), this is for type Decimal (thanks to https://haacked.com/archive/2011/03/19/fixing-binding-to-decimals.aspx/ and
-    https://stackoverflow.com/questions/25849160/decimal-numbers-in-asp-net-mvc-5-app#25862916 for the code)
+2. custom ModelBinder class (add it to your project), this is for type Decimal (thanks to [haacked.com](https://haacked.com/archive/2011/03/19/fixing-binding-to-decimals.aspx/) and [stackoverflow Decimal numbers in ASP.NET MVC 5 app](    https://stackoverflow.com/questions/25849160/decimal-numbers-in-asp-net-mvc-5-app#25862916) for the code)
 
 ```C#
 public class ModelBinder
