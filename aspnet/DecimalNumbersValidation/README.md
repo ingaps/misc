@@ -1,5 +1,4 @@
-It is known that by default ASP.NET applications accept only dot as the separator for decimal numbers as it is common for the US. 
-If you want to use a comma as a separator, the official documentation says it is necessary to include a special jQuery script for globalization.
+It is known that by default ASP.NET applications accept only dot as the separator for decimal numbers as it is common for the US. If you want to use a comma as a separator, the official documentation says it is necessary to include a special jQuery script for globalization.
 
 Let's say you want your app to accept BOTH comma and dot as a decimal separator in input fields.
 Here is a simple way to do this:
@@ -35,7 +34,7 @@ Steps:
 		public class DecimalModelBinder : DefaultModelBinder
 		{
 			public override object BindModel(ControllerContext controllerContext,
-											 ModelBindingContext bindingContext)
+							 ModelBindingContext bindingContext)
 			{
 				object result = null;
 
