@@ -82,7 +82,7 @@ ModelBinders.Binders.Add(typeof(decimal), new ModelBinder.DecimalModelBinder());
 ModelBinders.Binders.Add(typeof(decimal?), new ModelBinder.DecimalModelBinder());
 ```
 
-If you also want that the model accepts decimal numbers with only 2 decimals, you can add
+If you also want the model to accept decimal numbers with maximum 2 decimals, you can add
 the [RegularExpression] data annotation to your model variable:
 ```c#
 [RegularExpression(@"^$?-?\d+((.(\d{1,2}))|(,(\d{1,2})))?$", ErrorMessage = "Max two numbers after decimal separator accepted.")]
