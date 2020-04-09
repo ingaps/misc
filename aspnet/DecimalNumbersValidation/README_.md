@@ -7,11 +7,11 @@ Let's say you want your app to accept BOTH comma and dot as a decimal separator 
 1. overwrite jQuery validation number method
 2. add custom ModelBinder class
 
-###### Why are both steps necesary? 
+### Why are both steps necesary? 
 Step 1. enables jQuery to validate the TextBox for decimal numbers with dot or decimal separators.
 Step 2. with step one the values with dot or comma separator are allowed, but the controller gets null as the value from TextBox. That is why a custom model binder is necessary. Now both numbers 1.98 and 1,98 are accepted, as well as its negatives (-1.98 and -1,98).
 
-###### Steps:
+### Steps:
 
 1. overwrite jQuery validation number method (based on https://weblogs.asp.net/jdanforth/jquery-validate-and-the-comma-decimal-separator) )
 
