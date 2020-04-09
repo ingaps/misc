@@ -22,7 +22,7 @@ return this.optional(element) || /^$?-?\d+((.(\d+))|(,(\d+)))?$/.test(value);
 ```
 the regex `/^$?-?\d+((.(\d+))|(,(\d+)))?$/` accepts positive or negative decimal numbers with dot or comma as separator
 
-2. custom ModelBinder class (add it to your project), this is for type Decimal (thanks to [haacked.com](https://haacked.com/archive/2011/03/19/fixing-binding-to-decimals.aspx/) and [stackoverflow Decimal numbers in ASP.NET MVC 5 app](    https://stackoverflow.com/questions/25849160/decimal-numbers-in-asp-net-mvc-5-app#25862916) for the code)
+2. custom ModelBinder class (add it to your project), this is for type Decimal (thanks to [stackoverflow topic](https://stackoverflow.com/questions/25849160/decimal-numbers-in-asp-net-mvc-5-app#25862916) and [haacked.com](https://haacked.com/archive/2011/03/19/fixing-binding-to-decimals.aspx/) for the code)
 
 ```C#
 public class ModelBinder
@@ -88,6 +88,6 @@ the [RegularExpression] data annotation to your model variable:
 public decimal Price { get; set; }
 ```
  
-Hope this helps someone looking to use both comma and dot as separators. In this case adding the jquery globalisation script might not work since usually only one or the other is allowed, based on your country specific language, but not both.
-For same reason simply changing the culture and cultureInfo in Web.config won't work.
+Hope this helps someone looking to use both comma and dot as separators. In this case adding the jquery globalisation script might not work since usually only one or the other is allowed, based on your country specific localization culture, but not both.
+For the same reason simply changing the culture and cultureInfo in Web.config won't work.
 
