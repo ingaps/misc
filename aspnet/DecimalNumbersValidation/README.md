@@ -2,7 +2,7 @@
 
 It is known that by default ASP.NET applications accept only dot as the separator for decimal numbers as it is common for the English localization Culture. If you want to use a comma as a separator, the official documentation says it is necessary to include an extra jQuery script for globalization [ASP.NET tutorial](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/examining-the-edit-methods-and-edit-view#jquery-validation-for-non-english-locales)
 
-**Let's say you want your app to accept BOTH comma and dot as a decimal separator in input fields. **
+**Let's say you want your app to accept BOTH comma and dot as a decimal separator in input fields.**
 
 Here is a simple way to do this:
 
@@ -10,13 +10,11 @@ Here is a simple way to do this:
 2. add custom ModelBinder class
 
 ### Why are both steps necessary? 
-Step 1. enables jQuery to validate the TextBox for decimal numbers with dot or decimal separators.
-
-Step 2. with step one the values with dot or comma separator are allowed, but the controller gets null as the value from TextBox. That is why a custom model binder is necessary. Now both numbers 1.98 and 1,98 are accepted, as well as its negatives (-1.98 and -1,98).
+Step 1. enables jQuery to validate the TextBox for decimal numbers with dot or decimal separators. With step one the values with dot or comma separator are allowed, but the controller gets null as the value from TextBox. That is why in step 3 custom model binder is necessary. Now both numbers 1.98 and 1,98 are accepted, as well as its negatives (-1.98 and -1,98).
 
 ### Steps:
 
-1. overwrite jQuery validation number method (based on [ReBuildAll Blog](http://blog.rebuildall.net/2011/03/02/jQuery_validate_and_the_comma_decimal_separator) )
+#### 1. overwrite jQuery validation number method (based on [ReBuildAll Blog](http://blog.rebuildall.net/2011/03/02/jQuery_validate_and_the_comma_decimal_separator) )
 
 ```javascript
 $.validator.methods.number = function (value, element) {
@@ -25,7 +23,7 @@ return this.optional(element) || /^$?-?\d+((.(\d+))|(,(\d+)))?$/.test(value);
 ```
 the regex `/^$?-?\d+((.(\d+))|(,(\d+)))?$/` accepts positive or negative decimal numbers with dot or comma as separator
 
-2. custom ModelBinder class (add it to your project), this is for type Decimal (thanks to [stackoverflow topic](https://stackoverflow.com/questions/25849160/decimal-numbers-in-asp-net-mvc-5-app#25862916) and [haacked.com](https://haacked.com/archive/2011/03/19/fixing-binding-to-decimals.aspx/) for the code)
+#### 2. custom ModelBinder class (add it to your project), this is for type Decimal (thanks to [stackoverflow topic](https://stackoverflow.com/questions/25849160/decimal-numbers-in-asp-net-mvc-5-app#25862916) and [haacked.com](https://haacked.com/archive/2011/03/19/fixing-binding-to-decimals.aspx/) for the code)
 
 ```C#
 public class ModelBinder
