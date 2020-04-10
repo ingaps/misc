@@ -21,7 +21,7 @@ Step 1. enables jQuery to validate the TextBox for decimal numbers with dot or d
 ```javascript
 //add the method in the script tag in _Layout.cshtml before line (if you have it) //$(document).ready(){}
 $.validator.methods.number = function (value, element) {
-    return this.optional(element) || /^\$?-?\d+((\.(\d+))|(\,(\d+)))?$/.test(value); 
+    return this.optional(element) || /^\$?-?\d+((\.(\d+))|(\,(\d+)))?$/.test(value);  
   } 
 ```
 the regex `/^$?-?\d+((.(\d+))|(,(\d+)))?$/` accepts positive or negative decimal numbers with dot or comma as separator
