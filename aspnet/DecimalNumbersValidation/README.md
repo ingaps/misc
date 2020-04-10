@@ -9,6 +9,8 @@ Here is a simple way to do this:
 1. overwrite jQuery validation number method
 2. add custom ModelBinder class
 
+**Example VS2019 project is in DecimalNumbersExampleMvc**
+
 ### Why are both steps necessary? 
 Step 1. enables jQuery to validate the TextBox for decimal numbers with dot or decimal separators. With step one the values with dot or comma separator are allowed, but the controller gets null as the value from TextBox. That is why in step 3 custom model binder is necessary. Now both numbers 1.98 and 1,98 are accepted, as well as its negatives (-1.98 and -1,98).
 

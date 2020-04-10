@@ -1,0 +1,92 @@
+﻿@model DecimalNumbersExampleMvc.Models.ItemForSale
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<h1>Decimal numbers validation</h1>
+
+
+<div class="row">
+    <div class="col-md-10">
+
+        <p>
+            It is known that by default ASP.NET applications accept only dot as the separator for decimal numbers
+            as it is common for the English localization Culture. If you want to use a comma as a separator, the official
+            documentation says it is necessary to include an extra jQuery script for globalization ASP.NET tutorial
+        </p>
+        <p>
+
+            Let's say you want your app to accept BOTH comma and dot as a decimal separator in input fields.
+        </p>
+        <p>
+            Here is a simple way to do this:
+            <br />
+            1. overwrite jQuery validation number method  <br />
+            2. add custom ModelBinder class
+        </p>
+        <p>
+            <b>Why are both steps necessary?</b>
+        </p>
+        <p>
+            Step 1. enables jQuery to validate the TextBox for decimal numbers with dot or decimal separators.
+            With step one the values with dot or comma separator are allowed, but the controller gets null as the
+            value from TextBox. That is why in step 3 custom model binder is necessary.
+            Now both numbers 1.98 and 1,98 are accepted, as well as its negatives (-1.98 and -1,98).
+        </p>
+        <p>
+            <a class="btn btn-default" href="https://github.com/ingaps/misc/tree/master/aspnet/DecimalNumbersValidation#decimal-numbers-validation-in-aspnet-mvc-5">Learn more &raquo;</a>
+        </p>
+
+    </div>
+    <div class="col-md-10">
+        <h3>Try it out:</h3>
+        <p>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h5>Create Item for sale</h5>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ItemName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ItemName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+
+        </p>
+
+    </div>
+
+</div>
