@@ -1,13 +1,15 @@
-# Decimal number validation in ASP.NET MVC 5
+# Decimal numbers validation in ASP.NET MVC 5
 
-It is known that by default ASP.NET applications accept only dot as the separator for decimal numbers as it is common for the English localization Culture. If you want to use a comma as a separator, the official documentation says it is necessary to include a special jQuery script for globalization [ASP.NET tutorial](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/examining-the-edit-methods-and-edit-view#jquery-validation-for-non-english-locales)
+It is known that by default ASP.NET applications accept only dot as the separator for decimal numbers as it is common for the English localization Culture. If you want to use a comma as a separator, the official documentation says it is necessary to include an extra jQuery script for globalization [ASP.NET tutorial](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/examining-the-edit-methods-and-edit-view#jquery-validation-for-non-english-locales)
 
-Let's say you want your app to accept BOTH comma and dot as a decimal separator in input fields. Here is a simple way to do this:
+**Let's say you want your app to accept BOTH comma and dot as a decimal separator in input fields. **
+
+Here is a simple way to do this:
 
 1. overwrite jQuery validation number method
 2. add custom ModelBinder class
 
-### Why are both steps necesary? 
+### Why are both steps necessary? 
 Step 1. enables jQuery to validate the TextBox for decimal numbers with dot or decimal separators.
 Step 2. with step one the values with dot or comma separator are allowed, but the controller gets null as the value from TextBox. That is why a custom model binder is necessary. Now both numbers 1.98 and 1,98 are accepted, as well as its negatives (-1.98 and -1,98).
 
