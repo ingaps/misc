@@ -19,9 +19,10 @@ Step 1. enables jQuery to validate the TextBox for decimal numbers with dot or d
 #### 1. overwrite jQuery validation number method (based on [ReBuildAll Blog](http://blog.rebuildall.net/2011/03/02/jQuery_validate_and_the_comma_decimal_separator) )
 
 ```javascript
+//add the method in the script tag in _Layout.cshtml before line (if you have it) //$(document).ready(){}
 $.validator.methods.number = function (value, element) {
-return this.optional(element) || /^$?-?\d+((.(\d+))|(,(\d+)))?$/.test(value);
-} //add the method in the script tag in _Layout.cshtml before line (if you have it) //$(document).ready(){}
+    return this.optional(element) || /^\$?-?\d+((\.(\d+))|(\,(\d+)))?$/.test(value); 
+  } 
 ```
 the regex `/^$?-?\d+((.(\d+))|(,(\d+)))?$/` accepts positive or negative decimal numbers with dot or comma as separator
 
