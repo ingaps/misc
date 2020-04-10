@@ -11,6 +11,7 @@ Here is a simple way to do this:
 
 ### Why are both steps necessary? 
 Step 1. enables jQuery to validate the TextBox for decimal numbers with dot or decimal separators.
+
 Step 2. with step one the values with dot or comma separator are allowed, but the controller gets null as the value from TextBox. That is why a custom model binder is necessary. Now both numbers 1.98 and 1,98 are accepted, as well as its negatives (-1.98 and -1,98).
 
 ### Steps:
