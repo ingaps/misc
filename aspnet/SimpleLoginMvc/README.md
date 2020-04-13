@@ -34,7 +34,7 @@ public enum Roles
 When the user finds himself/herself on the Login page, they are asked to fill in their username and password.
 This data is stored in class `LoginViewModel`:
 
-```
+```C#
  public class LoginViewModel
     {
         [Required]
@@ -57,86 +57,83 @@ After clicking Login button, the method `Login(LoginViewModel user, string retur
 user data in the local storage (in this example it is a List of UserAccount items, usually it is a database).
 Here is the code:
 
-```
+```C#
 public ActionResult Login(LoginViewModel user, string returnUrl)
+{
+ ViewResult viewResult = View(user);
+ try
+ {
+    UserAccount userAccount = null;
+    // this action is for handle post (login)
+    if (ModelState.IsValid) // this is check validity
+    {
+	if (user != null)
         {
-            ViewResult viewResult = View(user);
-            try
-            {
-                UserAccount userAccount = null;
-                // this action is for handle post (login)
-                if (ModelState.IsValid) // this is check validity
+          //validate user
+          userAccount = ModelCollections.userAccounts.Find(x => x.Username == user.Username);
+          // var index = ModelCollections.userAccounts.FindIndex(x => x.Username == user.Username); 
+          //here index is ID in userAccount so the line above is not necessary
+
+          if (userAccount != null)
+          {
+             if (userAccount.Username != null)
+             {
+             	if (userAccount.UserPassword != null)
                 {
-				if (user != null)
+		    //check user credentials
+                    //decrypt found password if necessary and compare it to the one provided in login
+                    if (user.Password == userAccount.UserPassword)
                     {
-                        //validate user
-                        userAccount = ModelCollections.userAccounts.Find(x => x.Username == user.Username);
-                        // var index = ModelCollections.userAccounts.FindIndex(x => x.Username == user.Username); 
-                        //here index is ID in userAccount so the line above is not necessary
-
-                        if (userAccount != null)
-                        {
-                            if (userAccount.Username != null)
-                            {
-                                if (userAccount.UserPassword != null)
-                                {
-									//check user credentials
-                                    //decrypt found password if necessary and compare it to the one provided in login
-                                    if (user.Password == userAccount.UserPassword)
-                                    {
-                                        Session["UserRole"] = userAccount.Role;
-                                        Session["Username"] = userAccount.Username;
-                                        Session["UserID"] = userAccount.ID;
-                                        Session["FullName"] = userAccount.Name + " " + userAccount.LastName;
+		    	Session["UserRole"] = userAccount.Role;
+                        Session["Username"] = userAccount.Username;
+                        Session["UserID"] = userAccount.ID;
+                        Session["FullName"] = userAccount.Name + " " + userAccount.LastName;
                                        
-									   //add record to user activity log
-                                        ActivityString activity = LogActivity.LoginUser();
-                                        int.TryParse(Session["UserID"].ToString(), out int id);
+			//add record to user activity log
+                        ActivityString activity = LogActivity.LoginUser();
+                        int.TryParse(Session["UserID"].ToString(), out int id);
 
-                                        int recordID = ModelCollections.userActivityLogs.Count + 1;
-                                        ModelCollections.userActivityLogs.Add(new UserActivityLog()
-                                        {
-                                            ID = recordID,
-                                            UserAccountID = id,
-                                            Username = Session["Username"].ToString(),
-                                            Activity = activity.Activity,
-                                            ActivityDate = DateTime.Now,
-                                            ActivityDescription = activity.ActivityDescription,
-                                            Error = "", //if there was an error, you can report it here as well
-                                            Source = System.Environment.MachineName
-                                        });
-
-                                        //Add login date to user who logged in
-                                        ModelCollections.userAccounts[userAccount.ID].LastLoginDate = DateTime.Now;
-
-                                        return RedirectToLocal(returnUrl);
-                                    }
-                                    else
-                                    {
-                                        ModelState.AddModelError(String.Empty, "Incorrect password");
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                ModelState.AddModelError(String.Empty, "Username does not exist");
-
-                            }
-                        }
-                        else
+                        int recordID = ModelCollections.userActivityLogs.Count + 1;
+                        ModelCollections.userActivityLogs.Add(new UserActivityLog()
                         {
-                            ModelState.AddModelError(String.Empty, "User account does not exist");
+                            ID = recordID,
+                            UserAccountID = id,
+                            Username = Session["Username"].ToString(),
+                            Activity = activity.Activity,
+                            ActivityDate = DateTime.Now,
+                            ActivityDescription = activity.ActivityDescription,
+                            Error = "", //if there was an error, you can report it here as well
+                            Source = System.Environment.MachineName
+                          });
 
-                        }
-                    }
+                           /Add login date to user who logged in
+                           ModelCollections.userAccounts[userAccount.ID].LastLoginDate = DateTime.Now;
+                           return RedirectToLocal(returnUrl);
+                         }
+                         else
+                         {
+                           ModelState.AddModelError(String.Empty, "Incorrect password");
+                          }
+                     }
                 }
+                else
+                {
+                   ModelState.AddModelError(String.Empty, "Username does not exist");
+                }
+           }
+           else
+           {
+              ModelState.AddModelError(String.Empty, "User account does not exist");
             }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError(String.Empty, "Error. Check log for details."); //there should be a log
-            }
-            return viewResult;
         }
+      }
+  }
+  catch (Exception ex)
+  {
+     ModelState.AddModelError(String.Empty, "Error. Check log for details."); //there should be a log
+  }
+  return viewResult;
+}
 ```
 
 After checking user crdentials, Session variable is initialized and a record about user login is added to user 
@@ -208,7 +205,7 @@ Usage:
 
 ```C#
 
-		[CustomAuthorize("Admin")]
+	[CustomAuthorize("Admin")]
         [HandleError]
         // GET: Account
         public ActionResult Index()
