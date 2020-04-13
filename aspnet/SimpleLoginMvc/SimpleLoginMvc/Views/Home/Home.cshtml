@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+
+
+
+
+
+    <h1>Welcome</h1>
+    <p class="lead">@Session["FullName"].ToString() in role of @Session["UserRole"].ToString()</p>
+    
+
+<div class="row">
+    <div class="col-md-10">
+        <h2>How to navigate</h2>
+        <p>
+            If the authenticated user is in role of <b>@SimpleLoginMvc.Models.Roles.Admin.ToString() </b> ,
+            the user is authorized to view user account list and user activity log
+        </p>
+        <p>
+            The links will show in the menu
+        </p>
+        <p>
+            If the authenticated user is in role of  <b>@SimpleLoginMvc.Models.Roles.User.ToString() </b> ,
+            the user is authorized to view only the welcome page
+        </p>
+
+        <h2>For more information about this example project click Learn more button</h2>
+        <p><a class="btn btn-default" href="link_to_github_readme.md">Learn more &raquo;</a></p>
+    </div>
+    
+       
+   
+    
+</div>
+
