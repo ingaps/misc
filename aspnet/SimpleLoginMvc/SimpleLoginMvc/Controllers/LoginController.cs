@@ -69,8 +69,7 @@ namespace SimpleLoginMvc.Controllers
                                         Session["Username"] = userAccount.Username;
                                         Session["UserID"] = userAccount.ID;
                                         Session["FullName"] = userAccount.Name + " " + userAccount.LastName;
-                                        //SignInUser(korisnik.UserName, role, false);
-
+                                       
                                         ActivityString activity = LogActivity.LoginUser();
                                         int.TryParse(Session["UserID"].ToString(), out int id);
 

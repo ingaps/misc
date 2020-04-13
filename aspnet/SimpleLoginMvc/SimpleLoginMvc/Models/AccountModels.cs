@@ -23,25 +23,7 @@ namespace SimpleLoginMvc.Models
     }
 
 
-   /* public class ChangePasswordViewModel
-    {
-        [Required]
-        [Remote("IsCurrentPassword", "Validation", ErrorMessage = "Password is not valid. Try again.")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
-        public string OldPassword { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "Password {0} must have min {4} chracters.", MinimumLength = 4)]
-        [DataType(DataType.Password)]
-        [Display(Name = "New password")]
-        public string NewPassword { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "Passwords don't match")]
-        public string ConfirmPassword { get; set; }
-    }*/
+  
 
     public class UserAccount
     {
